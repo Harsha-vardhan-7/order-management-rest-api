@@ -35,4 +35,5 @@ public class Item {
 		this.stockQuantity = stockQuantity;
 		this.rating = rating;
 	}
+	
 }
