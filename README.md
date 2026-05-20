@@ -16,9 +16,9 @@ A backend REST API application built using Spring Boot, Spring Data JPA, Hiberna
 
 ---
 
-# Features
+## Features
 
-## Item Management
+### Item Management
 
 * Add new item
 * Update item details
@@ -27,7 +27,7 @@ A backend REST API application built using Spring Boot, Spring Data JPA, Hiberna
 * Get all items
 * Maintain stock quantity
 
-## Order Management
+### Order Management
 
 * Place customer orders
 * Order multiple items in a single request
@@ -38,19 +38,20 @@ A backend REST API application built using Spring Boot, Spring Data JPA, Hiberna
 * Reduce stock quantity after successful order placement
 * Prevent orders with insufficient stock
 * Maintain Order ↔ OrderItems ↔ Item relationships
+* Transactional order processing using `@Transactional`
 
-## DTO Architecture
+### DTO Architecture
 
 Separate DTOs implemented for request and response handling to avoid direct entity exposure.
 
-### Request DTOs
+#### Request DTOs
 
 * AddItemRequestDTO
 * UpdateRequestDTO
 * PlaceOrderRequestDTO
 * OrderItemRequestDTO
 
-### Response DTOs
+#### Response DTOs
 
 * ItemResponseDTO
 * OrderItemsResponseDTO
@@ -58,41 +59,42 @@ Separate DTOs implemented for request and response handling to avoid direct enti
 
 ---
 
-# Validation & Exception Handling
+## Validation & Exception Handling
 
-## Custom Exceptions
+### Custom Exceptions
 
 * ItemNotFoundException
 * InsufficientStockException
 
-## Global Exception Handling
+### Global Exception Handling
 
 Implemented centralized exception handling using:
 
-* @RestControllerAdvice
-* GlobalExceptionHandler
+* `@RestControllerAdvice`
+* `GlobalExceptionHandler`
 
-## Validation Features
+### Validation Features
 
 * Prevent invalid item IDs
 * Prevent ordering unavailable stock
 * Proper error responses with meaningful messages
+* Null-safe request handling
 
 ---
 
-# REST API Endpoints
+## REST API Endpoints
 
-## Item APIs
+### Item APIs
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/items` | Add new item |
+| POST | `/items/add` | Add new item |
 | GET | `/items/{id}` | Get item by ID |
 | GET | `/items` | Get all items |
 | PUT | `/items/{id}` | Update item |
 | DELETE | `/items/{id}` | Delete item |
 
-## Order APIs
+### Order APIs
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -100,13 +102,35 @@ Implemented centralized exception handling using:
 
 ---
 
-# Sample API Request
+## Sample API Testing
 
-## Place Order Request
+Below are sample API executions tested using Postman.
 
-```
+### Place Order API
+
+![Place Order API](screenshots/place-order-api.png)
+
+### Add Items API
+
+![Add Items API](screenshots/add-items-api.png)
+
+### Get All Items API
+
+![Get All Items](screenshots/get-all-items.png)
+
+### Insufficient Stock Exception
+
+![Insufficient Stock](screenshots/insufficient-stock.png)
+
+---
+
+## Sample Request Body
+
+### Place Order Request
+
+```json
 {
-  "orderItemReqeustList": [
+  "orderItemRequestList": [
     {
       "itemId": 1,
       "quantity": 2
@@ -121,35 +145,16 @@ Implemented centralized exception handling using:
 
 ---
 
-# Sample API Response
+## Project Structure
 
-```
-{
-  "orderId": 1,
-  "totalPrice": 550.0,
-  "orderItemResponse": [
-    {
-      "itemName": "Pizza",
-      "price": 200.0,
-      "quantity": 2,
-      "subTotal": 400.0
-    },
-    {
-      "itemName": "Burger",
-      "price": 150.0,
-      "quantity": 1,
-      "subTotal": 150.0
-    }
-  ]
-}
-```
-
----
-
-# Project Structure
-
-```
+```text
 order-management-rest-api
+│
+├── screenshots
+│   ├── add-items-api.png
+│   ├── get-all-items.png
+│   ├── insufficient-stock.png
+│   └── place-order-api.png
 │
 ├── src/main/java/com/flmfoods
 │   ├── controller
@@ -198,22 +203,22 @@ order-management-rest-api
 
 ---
 
-# Database Implementation
+## Database Implementation
 
 * Spring Data JPA repositories
 * Hibernate ORM mapping
 * Entity relationships using:
-  * @OneToMany
-  * @ManyToOne
+  * `@OneToMany`
+  * `@ManyToOne`
 * Transaction management using:
-  * @Transactional
+  * `@Transactional`
 * Automatic table mapping using JPA annotations
 
 ---
 
-# Database Schema
+## Database Schema
 
-## Item Table
+### Item Table
 
 | Column | Type |
 |--------|------|
@@ -222,7 +227,7 @@ order-management-rest-api
 | price | DOUBLE |
 | stock_quantity | INT |
 
-## Orders Table
+### Orders Table
 
 | Column | Type |
 |--------|------|
@@ -230,7 +235,7 @@ order-management-rest-api
 | total_quantity | INT |
 | final_order_price | DOUBLE |
 
-## Order Items Table
+### Order Items Table
 
 | Column | Type |
 |--------|------|
@@ -243,7 +248,7 @@ order-management-rest-api
 
 ---
 
-# API Testing
+## API Testing
 
 API endpoints tested using Postman for:
 
@@ -255,41 +260,41 @@ API endpoints tested using Postman for:
 
 ---
 
-# How to Run
+## How to Run
 
-## Clone Repository
+### Clone Repository
 
-```
+```bash
 git clone https://github.com/Harsha-vardhan-7/order-management-rest-api.git
 ```
 
-## Configure Database
+### Configure Database
 
 Update MySQL credentials inside:
 
-```
+```text
 src/main/resources/application.properties
 ```
 
-## Build Project
+### Build Project
 
-```
+```bash
 mvn clean install
 ```
 
-## Run Application
+### Run Application
 
-```
+```bash
 mvn spring-boot:run
 ```
 
-## Test APIs
+### Test APIs
 
 Use Postman to test API endpoints.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 This project strengthened understanding of:
 
@@ -308,7 +313,7 @@ This project strengthened understanding of:
 
 ---
 
-# Future Improvements
+## Future Improvements
 
 Planned future enhancements:
 
@@ -319,4 +324,4 @@ Planned future enhancements:
 * Docker deployment
 * Logging implementation
 * Role-based authorization
-```
+* Unit and integration testing
