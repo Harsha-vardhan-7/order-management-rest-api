@@ -18,4 +18,11 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleInsufficientStockException(InsufficientStockException insufficientStockException){
 		return new ResponseEntity<>(insufficientStockException.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException){
+		return new ResponseEntity<>(illegalArgumentException.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 }

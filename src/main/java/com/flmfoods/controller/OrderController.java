@@ -17,7 +17,7 @@ public class OrderController {
 	@Autowired
 	OrderServiceImpl orderServiceImpl;
 	
-	@PostMapping("/placeOrder")
+	@PostMapping()
 	public OrderResponseDTO placeOrder(@RequestBody PlaceOrderRequestDTO placeOrderRequestDTO) {
 		return orderServiceImpl.placeOrder(placeOrderRequestDTO);
 	}

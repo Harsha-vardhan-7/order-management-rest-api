@@ -35,7 +35,11 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public OrderResponseDTO placeOrder(PlaceOrderRequestDTO placeOrderRequestDTO) {
 
-		List<OrderItemRequestDTO> orderItemRequestList = placeOrderRequestDTO.getOrderItemReqeustList();
+		List<OrderItemRequestDTO> orderItemRequestList = placeOrderRequestDTO.getOrderItemRequestList();
+
+		if (orderItemRequestList == null || orderItemRequestList.isEmpty()) {
+		    throw new IllegalArgumentException("Order item list cannot be empty");
+		}
 
 		Order order = new Order();
 
