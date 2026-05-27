@@ -2,6 +2,8 @@ package com.flmfoods.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class ItemServiceImpl implements ItemService {
 
 	@Autowired
 	ItemRepository itemRepo;
+	
+//	LoggerFactory.getLogger()
 
 	private ItemResponseDTO mapToDTO(Item item) {
 		ItemResponseDTO responseDTO = new ItemResponseDTO();
