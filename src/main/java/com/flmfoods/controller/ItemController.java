@@ -20,14 +20,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.flmfoods.dto.AddItemRequestDTO;
 import com.flmfoods.dto.ItemResponseDTO;
 import com.flmfoods.dto.UpdateRequestDTO;
-import com.flmfoods.service.impl.ItemServiceImpl;
+import com.flmfoods.service.ItemService;
 
 @RestController
 @RequestMapping("/items")
 public class ItemController {
 
-	@Autowired
-	ItemServiceImpl itemServiceImpl;
+	
+	private final ItemService itemService;
+	
+
+	//Constructor Injection
+	@Autowired		//If we have only one constructor, @Autowired is optional
+	public ItemController(ItemService itemService){
+		this.itemService=itemService;
+	}
 	
 	private static final Logger log=LoggerFactory.getLogger(ItemController.class);
 	
@@ -36,7 +43,7 @@ public class ItemController {
 		log.trace("Request recieved to Add an Item in Item Controller");
 		
 		log.trace("Calling Service from Item Controller");
-		 ItemResponseDTO item = itemServiceImpl.addItem(addItemRequestDTO);
+		 ItemResponseDTO item = itemService.addItem(addItemRequestDTO);
 		 log.trace("Recieved data from the Item Service");  
 		 
 		 log.trace("Sending response for Add Item from Item Controller");
@@ -45,27 +52,27 @@ public class ItemController {
 	
 	@GetMapping()		// "/items" - direct root
 	public ResponseEntity<List<ItemResponseDTO>> getAllItems(){
-		 List<ItemResponseDTO> allItems = itemServiceImpl.getAllItems();
+		 List<ItemResponseDTO> allItems = itemService.getAllItems();
 		 return  ResponseEntity.ok(allItems);
 	}
 	
 	@GetMapping("/byId/{itemId}")		//If it is path variable we should mention in annotation
 	public ItemResponseDTO getItemById(@PathVariable int itemId) {
-		return itemServiceImpl.getItemById(itemId);
+		return itemService.getItemById(itemId);
 	}
 	
 	@GetMapping("/filterByPrice")		//required=false is to make parameter as an optional
 	public List<ItemResponseDTO> getItemGreaterThanPrice(@RequestParam(required = false) Integer price){
-		return itemServiceImpl.getItemGreaterThanPrice(price);
+		return itemService.getItemGreaterThanPrice(price);
 	}
 	
 	@DeleteMapping("/delete/{itemId}")
 	public String deleteItem(@PathVariable int itemId) {
-		return itemServiceImpl.deleteItem(itemId);
+		return itemService.deleteItem(itemId);
 	}
 	
 	@PutMapping("/update/{itemId}")
 	public ItemResponseDTO updateItem(@RequestBody UpdateRequestDTO updateRequestDTO, @PathVariable int itemId) {
-		return itemServiceImpl.updateItem(updateRequestDTO, itemId);
+		return itemService.updateItem(updateRequestDTO, itemId);
 	}
 }

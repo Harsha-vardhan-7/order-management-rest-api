@@ -2,12 +2,8 @@ package com.flmfoods.service;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.flmfoods.dto.AddItemRequestDTO;
 import com.flmfoods.dto.ItemResponseDTO;
-import com.flmfoods.dto.OrderResponseDTO;
-import com.flmfoods.dto.PlaceOrderRequestDTO;
 import com.flmfoods.dto.UpdateRequestDTO;
 
 public interface ItemService {
